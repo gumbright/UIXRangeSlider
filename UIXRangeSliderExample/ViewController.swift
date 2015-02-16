@@ -11,6 +11,8 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet var mySlider:UIXRangeSlider?
+    @IBOutlet var stockSlider:UIXRangeSlider?
+    
     @IBOutlet var recogView:UIView?
     @IBOutlet var leftValue:UILabel?
     @IBOutlet var rightValue:UILabel?

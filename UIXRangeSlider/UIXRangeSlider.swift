@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import QuartzCore
+import Darwin
 
 class UIXRangeSlider: UIControl
 {
@@ -30,11 +32,11 @@ class UIXRangeSlider: UIControl
     var rightValue:Double = 70.0
     
     //component views
-    var inactiveBarView:UIImageView = UIImageView()
-    var activeBarView:UIImageView = UIImageView()
-    var leftThumbView:UIImageView = UIImageView()
-    var rightThumbView:UIImageView = UIImageView()
-    var middleThumbView:UIImageView = UIImageView()
+    var inactiveBarView:UIView = UIView()
+    var activeBarView:UIView = UIView()
+    var leftThumbView:UIView = UIView()
+    var rightThumbView:UIView = UIView()
+    var middleThumbView:UIView = UIView()
     
     var leftPanGestureRecognizer:UIPanGestureRecognizer?
     var rightPanGestureRecognizer:UIPanGestureRecognizer?
@@ -59,6 +61,62 @@ class UIXRangeSlider: UIControl
         self.leftPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: Selector("handleLeftPan:"))
         self.rightPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: Selector("handleRightPan:"))
         self.middlePanGestureRecognizer = UIPanGestureRecognizer(target: self, action: Selector("handleMiddlePan:"))
+        
+        self.allocateDefaultViews()
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func allocateDefaultViews()
+    {
+        self.inactiveBarView = UIView(frame: CGRectMake(0, 0, 2, 2))
+        self.inactiveBarView.backgroundColor = UIColor.lightGrayColor()
+        
+        self.activeBarView = UIView(frame: CGRectMake(0, 0, 2, 2))
+        self.activeBarView.backgroundColor = UIColor.blueColor()
+        
+        self.middleThumbView = UIView(frame: CGRectMake(0, 0, 1, 27))
+        self.middleThumbView.backgroundColor = UIColor.lightGrayColor()
+        self.middleThumbView.layer.opacity = 0.5
+        self.middleThumbView.layer.shadowOpacity = 0.25
+        self.middleThumbView.layer.shadowOffset = CGSizeMake(0.0, 4.0)
+        self.middleThumbView.layer.shadowColor = UIColor.grayColor().CGColor
+        self.middleThumbView.layer.shadowRadius = 2.0
+        self.middleThumbView.addGestureRecognizer(self.middlePanGestureRecognizer!)
+        
+        self.leftThumbView = UIView(frame: CGRectMake(0, 0, 14, 27))
+        self.leftThumbView.addGestureRecognizer(self.leftPanGestureRecognizer!)
+        var path = UIBezierPath(arcCenter: CGPointMake(14.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: true)
+        path.closePath()
+        var layer = CAShapeLayer()
+        layer.path = path.CGPath
+        layer.fillColor = UIColor.whiteColor().CGColor
+        layer.strokeColor = UIColor.lightGrayColor().CGColor
+        layer.lineWidth = 0.25
+        layer.shadowOpacity = 0.25
+        layer.shadowOffset = CGSizeMake(-3.0, 4.0)
+        layer.shadowColor = UIColor.grayColor().CGColor
+        layer.shadowRadius = 2.0
+        self.leftThumbView.layer.addSublayer(layer)
+        
+        self.rightThumbView = UIView(frame: CGRectMake(0, 0, 14, 27))
+        self.rightThumbView.addGestureRecognizer(self.rightPanGestureRecognizer!)
+        path = UIBezierPath(arcCenter: CGPointMake(0.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: false)
+        path.closePath()
+        layer = CAShapeLayer()
+        layer.path = path.CGPath
+        layer.fillColor = UIColor.whiteColor().CGColor
+        layer.strokeColor = UIColor.lightGrayColor().CGColor
+        layer.lineWidth = 0.25
+        layer.shadowOpacity = 0.25
+        layer.shadowOffset = CGSizeMake(3.0, 4.0)
+        layer.shadowColor = UIColor.grayColor().CGColor
+        self.rightThumbView.layer.addSublayer(layer)
+        
+        self.orderSubviews()
+        
+        self.setNeedsLayout()
     }
     
     /////////////////////////////////////////////////////
@@ -285,7 +343,6 @@ class UIXRangeSlider: UIControl
             let newValue = self.rightValue + Double(translation.x) / Double(availableWidth) * range
 
             self.rightValue = newValue
-
 
             if (self.rightValue > self.maximumValue)
             {

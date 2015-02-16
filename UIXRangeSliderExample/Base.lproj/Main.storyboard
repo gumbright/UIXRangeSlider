@@ -17,22 +17,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="GE4-lt-VK2">
-                                <rect key="frame" x="408" y="254" width="94" height="29"/>
-                            </stepper>
-                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cDP-1D-zaH">
-                                <rect key="frame" x="151" y="99" width="298" height="31"/>
-                            </slider>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pwf-0a-lo7" customClass="UIXRangeSlider" customModule="UIXRangeSlider" customModuleProvider="target">
                                 <rect key="frame" x="58" y="339" width="484" height="64"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="sliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="EGx-dU-Hwk"/>
                                 </connections>
-                            </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WB8-LQ-B05">
-                                <rect key="frame" x="92" y="197" width="100" height="100"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r19-oR-v6U">
                                 <rect key="frame" x="58" y="424" width="42" height="21"/>
@@ -46,29 +36,40 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2ff-Ga-HkW" customClass="UIXRangeSlider" customModule="UIXRangeSlider" customModuleProvider="target">
+                                <rect key="frame" x="16" y="136" width="568" height="55"/>
+                            </view>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xau-93-c8s">
+                                <rect key="frame" x="14" y="58" width="572" height="31"/>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="xau-93-c8s" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="38" id="6vX-kH-NyK"/>
                             <constraint firstItem="hpD-nu-cw5" firstAttribute="top" secondItem="Pwf-0a-lo7" secondAttribute="bottom" constant="21" id="9JL-fa-6kq"/>
-                            <constraint firstItem="Pwf-0a-lo7" firstAttribute="top" secondItem="GE4-lt-VK2" secondAttribute="bottom" constant="56" id="E4V-uk-ugE"/>
                             <constraint firstItem="Pwf-0a-lo7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="FNM-1d-sqv"/>
+                            <constraint firstItem="2ff-Ga-HkW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="116" id="Uub-nj-94H"/>
                             <constraint firstItem="r19-oR-v6U" firstAttribute="top" secondItem="Pwf-0a-lo7" secondAttribute="bottom" constant="21" id="aZX-lK-bjH"/>
                             <constraint firstItem="hpD-nu-cw5" firstAttribute="trailing" secondItem="Pwf-0a-lo7" secondAttribute="trailing" id="ctd-ym-4t4"/>
                             <constraint firstItem="Pwf-0a-lo7" firstAttribute="leading" secondItem="r19-oR-v6U" secondAttribute="leading" id="dcY-RS-xgE"/>
-                            <constraint firstItem="WB8-LQ-B05" firstAttribute="top" secondItem="cDP-1D-zaH" secondAttribute="bottom" constant="68" id="fot-Pq-jpe"/>
-                            <constraint firstItem="WB8-LQ-B05" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="76" id="wCO-Kh-3Z8"/>
+                            <constraint firstItem="xau-93-c8s" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="g8d-gp-g6Z"/>
+                            <constraint firstItem="2ff-Ga-HkW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="jXZ-hv-On4"/>
+                            <constraint firstItem="2ff-Ga-HkW" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="jrR-TJ-r3O"/>
+                            <constraint firstItem="Pwf-0a-lo7" firstAttribute="top" secondItem="2ff-Ga-HkW" secondAttribute="bottom" constant="148" id="rVI-QB-r27"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Pwf-0a-lo7" secondAttribute="trailing" constant="20" id="wwh-im-LyF"/>
+                            <constraint firstItem="xau-93-c8s" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="xfa-dJ-fsM"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="leftValue" destination="r19-oR-v6U" id="xvT-YA-lcw"/>
                         <outlet property="mySlider" destination="Pwf-0a-lo7" id="c7U-iX-4ce"/>
-                        <outlet property="recogView" destination="WB8-LQ-B05" id="2Sf-hy-2uT"/>
                         <outlet property="rightValue" destination="hpD-nu-cw5" id="RlE-xx-jy2"/>
+                        <outlet property="stockSlider" destination="2ff-Ga-HkW" id="c0W-dd-sAb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="382" y="284"/>
         </scene>
     </scenes>
 </document>
