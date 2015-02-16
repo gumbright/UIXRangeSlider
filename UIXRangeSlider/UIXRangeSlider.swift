@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import Darwin
 
-class UIXRangeSlider: UIControl
+@IBDesignable class UIXRangeSlider: UIControl
 {
     //Config
     var leftThumbImage:UIImage = UIImage()
