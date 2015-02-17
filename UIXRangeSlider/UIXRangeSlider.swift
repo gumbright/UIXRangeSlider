@@ -26,10 +26,10 @@ import Darwin
     //var activeBarImageCapInsets:UIEdgeInsets = UIEdgeInsetsZero
     
     //State
-    var minimumValue:Double = 0.0
-    var maximumValue:Double = 100.0
-    var leftValue:Double = 30.0
-    var rightValue:Double = 70.0
+    @IBInspectable var minimumValue:Double = 0.0
+    @IBInspectable var maximumValue:Double = 100.0
+    @IBInspectable var leftValue:Double = 30.0
+    @IBInspectable var rightValue:Double = 70.0
     
     //component views
     var inactiveBarView:UIView = UIView()
@@ -85,9 +85,9 @@ import Darwin
         self.middleThumbView.layer.shadowRadius = 2.0
         self.middleThumbView.addGestureRecognizer(self.middlePanGestureRecognizer!)
         
-        self.leftThumbView = UIView(frame: CGRectMake(0, 0, 14, 27))
+        self.leftThumbView = UIView(frame: CGRectMake(0, 0, 27, 27))
         self.leftThumbView.addGestureRecognizer(self.leftPanGestureRecognizer!)
-        var path = UIBezierPath(arcCenter: CGPointMake(14.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: true)
+        var path = UIBezierPath(arcCenter: CGPointMake(27.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: true)
         path.closePath()
         var layer = CAShapeLayer()
         layer.path = path.CGPath
@@ -100,7 +100,7 @@ import Darwin
         layer.shadowRadius = 2.0
         self.leftThumbView.layer.addSublayer(layer)
         
-        self.rightThumbView = UIView(frame: CGRectMake(0, 0, 14, 27))
+        self.rightThumbView = UIView(frame: CGRectMake(0, 0, 27, 27))
         self.rightThumbView.addGestureRecognizer(self.rightPanGestureRecognizer!)
         path = UIBezierPath(arcCenter: CGPointMake(0.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: false)
         path.closePath()
