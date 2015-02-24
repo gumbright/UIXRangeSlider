@@ -20,16 +20,55 @@ import Darwin
     var middleThumbImage:UIImage = UIImage()
     
     var inactiveBarImage:UIImage?
-    //var inactiveBarImageCapInsets:UIEdgeInsets = UIEdgeInsetsZero
     
     var activeBarImage:UIImage = UIImage()
-    //var activeBarImageCapInsets:UIEdgeInsets = UIEdgeInsetsZero
     
     //State
-    @IBInspectable var minimumValue:Double = 0.0
-    @IBInspectable var maximumValue:Double = 100.0
-    @IBInspectable var leftValue:Double = 30.0
-    @IBInspectable var rightValue:Double = 70.0
+    @IBInspectable var minimumValue:Float = 0.0
+    {
+        didSet {
+            if (minimumValue > maximumValue)
+            {
+                minimumValue = maximumValue
+            }
+            self.setNeedsLayout()
+        }
+    }
+    
+    @IBInspectable var maximumValue:Float = 1.0
+    {
+        didSet {
+            if (maximumValue < minimumValue)
+            {
+                maximumValue = minimumValue
+            }
+            self.setNeedsLayout()
+        }
+    }
+    
+    @IBInspectable var leftValue:Float = 0.3
+        {
+        didSet {
+            if (leftValue < self.minimumValue)
+            {
+                leftValue = self.minimumValue
+            }
+            self.setNeedsLayout()
+            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+        }
+    }
+    
+    @IBInspectable var rightValue:Float = 0.7
+    {
+        didSet {
+            if (rightValue > self.maximumValue)
+            {
+                rightValue = self.maximumValue
+            }
+            self.setNeedsLayout()
+            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+        }
+    }
     
     //component views
     var inactiveBarView:UIView = UIView()
@@ -180,7 +219,7 @@ import Darwin
     /////////////////////////////////////////////////////
     func positionLeftThumb()
     {
-        let pos = CGFloat(positionForValue(self.leftValue))
+        let pos = positionForValue(self.leftValue)
         var frame = self.leftThumbView.frame
         frame.origin.x = CGFloat(pos - self.leftThumbView.bounds.width)
         self.leftThumbView.frame = frame;
@@ -200,9 +239,10 @@ import Darwin
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    func positionForValue(value:Double) -> Double
+    func positionForValue(value:Float) -> CGFloat
     {
-        return (Double(self.inactiveBarView.frame.width) * (value - self.minimumValue) / (self.maximumValue - self.minimumValue)) +  Double(self.inactiveBarView.frame.origin.x)
+        let pos = Float(self.inactiveBarView.frame.width) * (value - self.minimumValue) / (self.maximumValue - self.minimumValue) +  Float(self.inactiveBarView.frame.origin.x)
+        return CGFloat(pos)
     }
     
     /////////////////////////////////////////////////////
@@ -310,7 +350,7 @@ import Darwin
             let range = self.maximumValue - self.minimumValue
             let availableWidth = self.inactiveBarView.frame.width
             
-            let newValue = self.leftValue + Double(translation.x) / Double(availableWidth) * range
+            let newValue = self.leftValue + Float(translation.x) / Float(availableWidth) * range
            
             self.leftValue = newValue
             
@@ -326,7 +366,6 @@ import Darwin
             
             gestureRecognizer.setTranslation(CGPointZero, inView: self)
             self.setNeedsLayout()
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
         }
     }
     
@@ -340,7 +379,7 @@ import Darwin
             let translation = gestureRecognizer.translationInView(self)
             let range = self.maximumValue - self.minimumValue
             let availableWidth = self.inactiveBarView.frame.width
-            let newValue = self.rightValue + Double(translation.x) / Double(availableWidth) * range
+            let newValue = self.rightValue + Float(translation.x) / Float(availableWidth) * range
 
             self.rightValue = newValue
 
@@ -356,7 +395,6 @@ import Darwin
 
             gestureRecognizer.setTranslation(CGPointZero, inView: self)
             self.setNeedsLayout()
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
         }
     }
     
@@ -372,7 +410,7 @@ import Darwin
             let availableWidth = self.inactiveBarView.frame.width
             let diff = self.rightValue - self.leftValue
             
-            let newLeftValue = self.leftValue + Double(translation.x) / Double(availableWidth) * range
+            let newLeftValue = self.leftValue + Float(translation.x) / Float(availableWidth) * range
             if (newLeftValue < minimumValue)
             {
                 self.leftValue = self.minimumValue
@@ -380,7 +418,7 @@ import Darwin
             }
             else
             {
-                let newRightValue = self.rightValue + Double(translation.x) / Double(availableWidth) * range
+                let newRightValue = self.rightValue + Float(translation.x) / Float(availableWidth) * range
                 if (newRightValue > self.maximumValue)
                 {
                     self.rightValue = self.maximumValue
@@ -394,7 +432,14 @@ import Darwin
             }
             gestureRecognizer.setTranslation(CGPointZero, inView: self)
             self.setNeedsLayout()
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
         }
     }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
 }

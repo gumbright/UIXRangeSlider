@@ -35,8 +35,9 @@ class ViewController: UIViewController {
         self.mySlider?.setRightThumbImage(UIImage(named: "rightthumb")!)
         self.mySlider?.setMiddleThumbImage(UIImage(named: "middlethumb")!.resizableImageWithCapInsets(UIEdgeInsetsZero))
         
-        self.recog = UIPanGestureRecognizer(target: self, action: "tapped:")
-        recogView?.addGestureRecognizer(self.recog!)
+        stockSlider?.leftValue = 0.0
+        stockSlider?.rightValue = 100.0
+        
     }
     
     func tapped(recog:UIPanGestureRecognizer)
