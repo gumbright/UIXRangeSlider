@@ -49,7 +49,7 @@ import Darwin
     @IBInspectable var leftValue:Float = 0.3
         {
         didSet {
-            if (leftValue < self.minimumValue)
+            if (leftValue >= self.minimumValue)
             {
                 leftValue = self.minimumValue
             }
@@ -61,7 +61,7 @@ import Darwin
     @IBInspectable var rightValue:Float = 0.7
     {
         didSet {
-            if (rightValue > self.maximumValue)
+            if (rightValue <= self.maximumValue)
             {
                 rightValue = self.maximumValue
             }
