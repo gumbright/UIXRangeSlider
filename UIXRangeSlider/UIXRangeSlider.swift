@@ -23,6 +23,21 @@ import Darwin
     
     var activeBarImage:UIImage = UIImage()
     
+    var previousLocation : CGPoint!
+    
+    enum ElementTracked
+    {
+        case None
+        case LeftThumb
+        case MiddleThumb
+        case RightThumb
+    }
+    var trackedElement = ElementTracked.None
+    
+    var movingLeftThumb : Bool = false
+    var movingMiddleThumb : Bool = false
+    var movingRightThumb : Bool = false
+    
     //State
     @IBInspectable var minimumValue:Float = 0.0
     {
@@ -77,10 +92,6 @@ import Darwin
     var rightThumbView:UIView = UIView()
     var middleThumbView:UIView = UIView()
     
-    var leftPanGestureRecognizer:UIPanGestureRecognizer?
-    var rightPanGestureRecognizer:UIPanGestureRecognizer?
-    var middlePanGestureRecognizer:UIPanGestureRecognizer?
-    
     //min ht = 31
     //respect view width, height is centered on view y
     
@@ -97,10 +108,6 @@ import Darwin
     /////////////////////////////////////////////////////
     func commonInit()
     {
-        self.leftPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: Selector("handleLeftPan:"))
-        self.rightPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: Selector("handleRightPan:"))
-        self.middlePanGestureRecognizer = UIPanGestureRecognizer(target: self, action: Selector("handleMiddlePan:"))
-        
         self.allocateDefaultViews()
     }
     
@@ -111,9 +118,11 @@ import Darwin
     {
         self.inactiveBarView = UIView(frame: CGRectMake(0, 0, 2, 2))
         self.inactiveBarView.backgroundColor = UIColor.lightGrayColor()
+        self.inactiveBarView.userInteractionEnabled = false
         
         self.activeBarView = UIView(frame: CGRectMake(0, 0, 2, 2))
         self.activeBarView.backgroundColor = UIColor.blueColor()
+        self.activeBarView.userInteractionEnabled = false
         
         self.middleThumbView = UIView(frame: CGRectMake(0, 0, 1, 27))
         self.middleThumbView.backgroundColor = UIColor.lightGrayColor()
@@ -122,10 +131,9 @@ import Darwin
         self.middleThumbView.layer.shadowOffset = CGSizeMake(0.0, 4.0)
         self.middleThumbView.layer.shadowColor = UIColor.grayColor().CGColor
         self.middleThumbView.layer.shadowRadius = 2.0
-        self.middleThumbView.addGestureRecognizer(self.middlePanGestureRecognizer!)
+        self.middleThumbView.userInteractionEnabled = false
         
         self.leftThumbView = UIView(frame: CGRectMake(0, 0, 27, 27))
-        self.leftThumbView.addGestureRecognizer(self.leftPanGestureRecognizer!)
         var path = UIBezierPath(arcCenter: CGPointMake(27.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: true)
         path.closePath()
         var layer = CAShapeLayer()
@@ -138,9 +146,9 @@ import Darwin
         layer.shadowColor = UIColor.grayColor().CGColor
         layer.shadowRadius = 2.0
         self.leftThumbView.layer.addSublayer(layer)
+        self.leftThumbView.userInteractionEnabled = false
         
         self.rightThumbView = UIView(frame: CGRectMake(0, 0, 27, 27))
-        self.rightThumbView.addGestureRecognizer(self.rightPanGestureRecognizer!)
         path = UIBezierPath(arcCenter: CGPointMake(0.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: false)
         path.closePath()
         layer = CAShapeLayer()
@@ -152,6 +160,7 @@ import Darwin
         layer.shadowOffset = CGSizeMake(3.0, 4.0)
         layer.shadowColor = UIColor.grayColor().CGColor
         self.rightThumbView.layer.addSublayer(layer)
+        self.rightThumbView.userInteractionEnabled = false
         
         self.orderSubviews()
         
@@ -255,6 +264,7 @@ import Darwin
         let newView = UIImageView(image: self.inactiveBarImage)
         self.inactiveBarView.removeFromSuperview()
         self.inactiveBarView = UIImageView(image: self.inactiveBarImage)
+        self.inactiveBarView.userInteractionEnabled = false
         self.addSubview(self.inactiveBarView)
         self.orderSubviews()
         self.setNeedsLayout()
@@ -268,6 +278,7 @@ import Darwin
         self.activeBarImage = activeBarImage
         self.activeBarView.removeFromSuperview()
         self.activeBarView = UIImageView(image: self.activeBarImage)
+        self.activeBarView.userInteractionEnabled = false
         self.addSubview(self.activeBarView)
         self.orderSubviews()
         self.setNeedsLayout()
@@ -279,11 +290,9 @@ import Darwin
     func setLeftThumbImage(leftThumbImage:UIImage)
     {
         self.leftThumbImage = leftThumbImage
-        self.leftThumbView.removeGestureRecognizer(self.leftPanGestureRecognizer!)
         self.leftThumbView.removeFromSuperview()
         self.leftThumbView = UIImageView(image: self.leftThumbImage)
-        self.leftThumbView.userInteractionEnabled = true
-        self.leftThumbView.addGestureRecognizer(self.leftPanGestureRecognizer!)
+        self.leftThumbView.userInteractionEnabled = false
         self.addSubview(self.leftThumbView)
         self.orderSubviews()
         self.setNeedsLayout()
@@ -295,11 +304,9 @@ import Darwin
     func setRightThumbImage(rightThumbImage:UIImage)
     {
         self.rightThumbImage = rightThumbImage
-        self.rightThumbView.removeGestureRecognizer(self.rightPanGestureRecognizer!)
         self.rightThumbView.removeFromSuperview()
         self.rightThumbView = UIImageView(image: self.rightThumbImage)
-        self.rightThumbView.userInteractionEnabled = true
-        self.rightThumbView.addGestureRecognizer(self.rightPanGestureRecognizer!)
+        self.rightThumbView.userInteractionEnabled = false
         self.addSubview(self.rightThumbView)
         self.orderSubviews()
         self.setNeedsLayout()
@@ -311,11 +318,9 @@ import Darwin
     func setMiddleThumbImage(middleThumbImage:UIImage)
     {
         self.middleThumbImage = middleThumbImage
-        self.middleThumbView.removeGestureRecognizer(self.middlePanGestureRecognizer!)
         self.middleThumbView.removeFromSuperview()
         self.middleThumbView = UIImageView(image: self.middleThumbImage)
-        self.middleThumbView.userInteractionEnabled = true
-        self.middleThumbView.addGestureRecognizer(self.middlePanGestureRecognizer!)
+        self.middleThumbView.userInteractionEnabled = false
         self.addSubview(self.middleThumbView)
         self.orderSubviews()
         self.setNeedsLayout()
@@ -338,123 +343,152 @@ import Darwin
         self.addSubview(self.activeBarView)
     }
     
-//    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-//        
-//    }
-//    
-//    override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
-//        
-//    }
-//    
-//    override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) {
-//        
-//    }
-    
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    func handleLeftPan(gestureRecognizer: UIPanGestureRecognizer)
+    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool
     {
-        if (gestureRecognizer.state == UIGestureRecognizerState.Began || gestureRecognizer.state == UIGestureRecognizerState.Changed)
+        previousLocation = touch.locationInView(self)
+        
+        // Hit test the thumb layers
+        if leftThumbView.frame.contains(previousLocation)
         {
-            let translation = gestureRecognizer.translationInView(self)
-            let range = self.maximumValue - self.minimumValue
-            let availableWidth = self.inactiveBarView.frame.width
-            
-            let newValue = self.leftValue + Float(translation.x) / Float(availableWidth) * range
-           
-            self.leftValue = newValue
-            
-            if (self.leftValue < minimumValue)
-            {
-                self.leftValue = minimumValue
-            }
-            
-            if (self.leftValue > self.rightValue)
-            {
-                self.leftValue = self.rightValue
-            }
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
-            
-            gestureRecognizer.setTranslation(CGPointZero, inView: self)
-            self.setNeedsLayout()
+            trackedElement = .LeftThumb
         }
+        else if rightThumbView.frame.contains(previousLocation)
+        {
+            trackedElement = .RightThumb
+        }
+        else if middleThumbView.frame.contains(previousLocation)
+        {
+            trackedElement = .MiddleThumb
+        }
+        
+        return trackedElement != .None
+    }
+
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool
+    {
+        let location = touch.locationInView(self)
+        
+        // 1. Determine by how much the user has dragged
+        let deltaLocation = Double(location.x - previousLocation.x)
+        let deltaValue = (Double(maximumValue) - Double(minimumValue)) * deltaLocation / Double(bounds.width /*- thumbWidth*/)
+        
+        switch trackedElement
+        {
+        case .LeftThumb:
+            handleLeftThumbMove(location, delta: deltaValue)
+        case .MiddleThumb:
+            handleMiddleThumbMove(location, delta: deltaValue)
+        case .RightThumb:
+            handleRightThumbMove(location, delta: deltaValue)
+        default:
+            break
+        }
+        
+        previousLocation = location
+        
+        return true
+    }
+
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func handleLeftThumbMove(location:CGPoint, delta:Double)
+    {
+        let translation = CGPointMake(location.x - previousLocation.x,location.y - previousLocation.y)
+        let range = self.maximumValue - self.minimumValue
+        let availableWidth = self.inactiveBarView.frame.width
+        
+        let newValue = self.leftValue + Float(translation.x) / Float(availableWidth) * range
+        
+        self.leftValue = newValue
+        
+        if (self.leftValue < minimumValue)
+        {
+            self.leftValue = minimumValue
+        }
+        
+        if (self.leftValue > self.rightValue)
+        {
+            self.leftValue = self.rightValue
+        }
+        self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+        
+        self.setNeedsLayout()
     }
     
-     /////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    func handleRightPan(gestureRecognizer: UIPanGestureRecognizer)
+    func handleMiddleThumbMove(location:CGPoint, delta:Double)
     {
-        if (gestureRecognizer.state == UIGestureRecognizerState.Began || gestureRecognizer.state == UIGestureRecognizerState.Changed)
+        let translation = CGPointMake(location.x - previousLocation.x,location.y - previousLocation.y)
+        let range = self.maximumValue - self.minimumValue
+        let availableWidth = self.inactiveBarView.frame.width
+        let diff = self.rightValue - self.leftValue
+        
+        let newLeftValue = self.leftValue + Float(translation.x) / Float(availableWidth) * range
+        if (newLeftValue < minimumValue)
         {
-            let translation = gestureRecognizer.translationInView(self)
-            let range = self.maximumValue - self.minimumValue
-            let availableWidth = self.inactiveBarView.frame.width
-            let newValue = self.rightValue + Float(translation.x) / Float(availableWidth) * range
-
-            self.rightValue = newValue
-
-            if (self.rightValue > self.maximumValue)
+            self.leftValue = self.minimumValue
+            self.rightValue = self.leftValue + diff
+        }
+        else
+        {
+            let newRightValue = self.rightValue + Float(translation.x) / Float(availableWidth) * range
+            if (newRightValue > self.maximumValue)
             {
                 self.rightValue = self.maximumValue
-            }
-            
-            if (self.rightValue < self.leftValue)
-            {
-                self.rightValue = self.leftValue
-            }
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
-
-            gestureRecognizer.setTranslation(CGPointZero, inView: self)
-            self.setNeedsLayout()
-        }
-    }
-    
-    /////////////////////////////////////////////////////
-    //
-    /////////////////////////////////////////////////////
-    func handleMiddlePan(gestureRecognizer: UIPanGestureRecognizer)
-    {
-        if (gestureRecognizer.state == UIGestureRecognizerState.Began || gestureRecognizer.state == UIGestureRecognizerState.Changed)
-        {
-            let translation = gestureRecognizer.translationInView(self)
-            let range = self.maximumValue - self.minimumValue
-            let availableWidth = self.inactiveBarView.frame.width
-            let diff = self.rightValue - self.leftValue
-            
-            let newLeftValue = self.leftValue + Float(translation.x) / Float(availableWidth) * range
-            if (newLeftValue < minimumValue)
-            {
-                self.leftValue = self.minimumValue
-                self.rightValue = self.leftValue + diff
+                self.leftValue = self.rightValue - diff
             }
             else
             {
-                let newRightValue = self.rightValue + Float(translation.x) / Float(availableWidth) * range
-                if (newRightValue > self.maximumValue)
-                {
-                    self.rightValue = self.maximumValue
-                    self.leftValue = self.rightValue - diff
-                }
-                else
-                {
-                    self.leftValue = newLeftValue
-                    self.rightValue = self.leftValue + diff
-                }
+                self.leftValue = newLeftValue
+                self.rightValue = self.leftValue + diff
             }
-            
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
-            gestureRecognizer.setTranslation(CGPointZero, inView: self)
-            self.setNeedsLayout()
         }
+        
+        self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+        self.setNeedsLayout()
     }
     
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
+    func handleRightThumbMove(location:CGPoint, delta:Double)
+    {
+        let translation = CGPointMake(location.x - previousLocation.x,location.y - previousLocation.y)
+        let range = self.maximumValue - self.minimumValue
+        let availableWidth = self.inactiveBarView.frame.width
+        let newValue = self.rightValue + Float(translation.x) / Float(availableWidth) * range
+        
+        self.rightValue = newValue
+        
+        if (self.rightValue > self.maximumValue)
+        {
+            self.rightValue = self.maximumValue
+        }
+        
+        if (self.rightValue < self.leftValue)
+        {
+            self.rightValue = self.leftValue
+        }
+        self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
+        
+        self.setNeedsLayout()
+    }
     
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
+    override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent)
+    {
+        trackedElement = .None
+    }
+
 }
