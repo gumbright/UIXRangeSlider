@@ -53,8 +53,8 @@ import Darwin
             {
                 leftValue = self.minimumValue
             }
+            
             self.setNeedsLayout()
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
         }
     }
     
@@ -65,8 +65,8 @@ import Darwin
             {
                 rightValue = self.maximumValue
             }
+            
             self.setNeedsLayout()
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
         }
     }
     
@@ -338,6 +338,17 @@ import Darwin
         self.addSubview(self.activeBarView)
     }
     
+//    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
+//        
+//    }
+//    
+//    override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
+//        
+//    }
+//    
+//    override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) {
+//        
+//    }
     
     /////////////////////////////////////////////////////
     //
@@ -363,6 +374,7 @@ import Darwin
             {
                 self.leftValue = self.rightValue
             }
+            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
             
             gestureRecognizer.setTranslation(CGPointZero, inView: self)
             self.setNeedsLayout()
@@ -392,6 +404,7 @@ import Darwin
             {
                 self.rightValue = self.leftValue
             }
+            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
 
             gestureRecognizer.setTranslation(CGPointZero, inView: self)
             self.setNeedsLayout()
@@ -430,6 +443,8 @@ import Darwin
                     self.rightValue = self.leftValue + diff
                 }
             }
+            
+            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
             gestureRecognizer.setTranslation(CGPointZero, inView: self)
             self.setNeedsLayout()
         }

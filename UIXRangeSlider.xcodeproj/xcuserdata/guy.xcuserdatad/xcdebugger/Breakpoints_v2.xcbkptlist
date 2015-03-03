@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445741711.465901"
+            timestampString = "447049700.142541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
             landmarkName = "UIXRangeSlider"
             landmarkType = "3">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445744249.795803"
+            timestampString = "447049700.142541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "UIXRangeSlider"
             landmarkType = "3">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445744249.795803"
+            timestampString = "447049700.142541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
             landmarkName = "UIXRangeSlider"
             landmarkType = "3">
          </BreakpointContent>
@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445744249.795803"
+            timestampString = "447049700.142541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "awakeFromNib()"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
+            landmarkName = "init(frame:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445744249.795803"
+            timestampString = "447049700.142541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "307"
-            endingLineNumber = "307"
-            landmarkName = "handleLeftPan(_:)"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
+            landmarkName = "orderSubviews()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,13 +90,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445741711.465901"
+            timestampString = "447049700.142541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "commonInit()"
-            landmarkType = "5">
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "UIXRangeSlider"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,12 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445744249.795803"
+            timestampString = "447049700.142541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
-            landmarkName = "setLeftThumbImage(_:)"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "setInactiveBarImage(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSliderExample/ViewController.swift"
-            timestampString = "445737129.345022"
+            timestampString = "446445724.989775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "tapped(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSliderExample/ViewController.swift"
-            timestampString = "445737129.345022"
+            timestampString = "446445724.989775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,12 +154,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445744249.795803"
+            timestampString = "447049700.142541"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
-            landmarkName = "handleRightPan(_:)"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
+            landmarkName = "handleLeftPan(_:)"
             landmarkType = "5">
             <Locations>
                <Location
@@ -200,11 +200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445744249.795803"
+            timestampString = "447053994.203952"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
+            startingLineNumber = "387"
+            endingLineNumber = "387"
             landmarkName = "handleRightPan(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -228,16 +228,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "UIXRangeSlider/UIXRangeSlider.swift"
-            timestampString = "445744249.795803"
+            timestampString = "447053994.203952"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
-            landmarkName = "handleMiddlePan(_:)"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
+            landmarkName = "handleRightPan(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UIXRangeSlider/UIXRangeSlider.swift"
+            timestampString = "447049700.142541"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "UIXRangeSlider"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "UIXRangeSlider/UIXRangeSlider.swift"
+            timestampString = "447049467.988096"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "commonInit()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
