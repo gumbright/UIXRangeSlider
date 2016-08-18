@@ -39,6 +39,7 @@
 		E49DDFE41A8D3EC300FE3146 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E49DDFE51A8D3EC300FE3146 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E49DDFE71A8D3EC300FE3146 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E4CEE13D1D66784E00749752 /* UIXRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIXRangeSlider.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +99,7 @@
 		E49DDFDC1A8D3EC300FE3146 /* UIXRangeSlider */ = {
 			isa = PBXGroup;
 			children = (
+				E4CEE13D1D66784E00749752 /* UIXRangeSlider.h */,
 				E49DDFDD1A8D3EC300FE3146 /* UIXRangeSlider.swift */,
 			);
 			path = UIXRangeSlider;
@@ -160,6 +162,8 @@
 		E49DDFAC1A8D3DDB00FE3146 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Umbright Consulting, Inc.";
 				TargetAttributes = {

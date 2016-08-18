@@ -25,15 +25,15 @@ class ViewController: UIViewController {
         
         let inactiveBarImage = UIImage(named: "inactivebar")
         let ibi2 = inactiveBarImage?.resizableImageWithCapInsets(UIEdgeInsetsMake(0, 5, 0, 5))
-        self.mySlider?.setInactiveBarImage(ibi2!)
+        self.mySlider?.inactiveBarImage = ibi2!
         
         let activeBarImage = UIImage(named: "activebar")
         let abi = activeBarImage?.resizableImageWithCapInsets(UIEdgeInsetsZero)
-        self.mySlider?.setActiveBarImage(abi!)
+        self.mySlider?.activeBarImage = abi!
         
-        self.mySlider?.setLeftThumbImage(UIImage(named: "leftthumb")!)
-        self.mySlider?.setRightThumbImage(UIImage(named: "rightthumb")!)
-        self.mySlider?.setMiddleThumbImage(UIImage(named: "middlethumb")!.resizableImageWithCapInsets(UIEdgeInsetsZero))
+        self.mySlider?.leftThumbImage = UIImage(named: "leftthumb")!
+        self.mySlider?.rightThumbImage = UIImage(named: "rightthumb")!
+        self.mySlider?.middleThumbImage = UIImage(named: "middlethumb")!.resizableImageWithCapInsets(UIEdgeInsetsZero)
         
         stockSlider?.leftValue = 0.0
         stockSlider?.rightValue = 100.0
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     
     func tapped(recog:UIPanGestureRecognizer)
     {
-        println("tapped")
+        print("tapped")
         recogView?.removeGestureRecognizer(self.recog!)
         recogView?.addGestureRecognizer(self.recog!)
         

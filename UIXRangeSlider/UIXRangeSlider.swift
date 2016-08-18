@@ -13,15 +13,68 @@ import Darwin
 @IBDesignable class UIXRangeSlider: UIControl
 {
     //Config
-    var leftThumbImage:UIImage = UIImage()
-    var rightThumbImage:UIImage = UIImage()
     var thumbActiveBarInset = 0.0
     
+    var leftThumbImage:UIImage = UIImage()
+    {
+        didSet {
+            self.leftThumbView.removeFromSuperview()
+            self.leftThumbView = UIImageView(image: self.leftThumbImage)
+            self.leftThumbView.userInteractionEnabled = false
+            self.addSubview(self.leftThumbView)
+            self.orderSubviews()
+            self.setNeedsLayout()
+        }
+    }
+    
+    var rightThumbImage:UIImage = UIImage()
+    {
+        didSet {
+            self.rightThumbView.removeFromSuperview()
+            self.rightThumbView = UIImageView(image: self.rightThumbImage)
+            self.rightThumbView.userInteractionEnabled = false
+            self.addSubview(self.rightThumbView)
+            self.orderSubviews()
+            self.setNeedsLayout()
+        }
+    }
+    
     var middleThumbImage:UIImage = UIImage()
+    {
+        didSet {
+            self.middleThumbView.removeFromSuperview()
+            self.middleThumbView = UIImageView(image: self.middleThumbImage)
+            self.middleThumbView.userInteractionEnabled = false
+            self.addSubview(self.middleThumbView)
+            self.orderSubviews()
+            self.setNeedsLayout()
+        }
+    }
     
     var inactiveBarImage:UIImage?
+    {
+        didSet {
+            let newView = UIImageView(image: self.inactiveBarImage)
+            self.inactiveBarView.removeFromSuperview()
+            self.inactiveBarView = UIImageView(image: self.inactiveBarImage)
+            self.inactiveBarView.userInteractionEnabled = false
+            self.addSubview(self.inactiveBarView)
+            self.orderSubviews()
+            self.setNeedsLayout()
+        }
+    }
     
     var activeBarImage:UIImage = UIImage()
+    {
+        didSet {
+            self.activeBarView.removeFromSuperview()
+            self.activeBarView = UIImageView(image: self.activeBarImage)
+            self.activeBarView.userInteractionEnabled = false
+            self.addSubview(self.activeBarView)
+            self.orderSubviews()
+            self.setNeedsLayout()
+        }
+    }
     
     var previousLocation : CGPoint!
     
@@ -179,7 +232,7 @@ import Darwin
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    required init(coder: NSCoder)
+    required init?(coder: NSCoder)
     {
         super.init(coder: coder)
         self.commonInit()
@@ -257,74 +310,74 @@ import Darwin
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    func setInactiveBarImage(inactiveBarImage:UIImage)
-    {
-        self.inactiveBarImage = inactiveBarImage
-        
-        let newView = UIImageView(image: self.inactiveBarImage)
-        self.inactiveBarView.removeFromSuperview()
-        self.inactiveBarView = UIImageView(image: self.inactiveBarImage)
-        self.inactiveBarView.userInteractionEnabled = false
-        self.addSubview(self.inactiveBarView)
-        self.orderSubviews()
-        self.setNeedsLayout()
-    }
+//    func setInactiveBarImage(inactiveBarImage:UIImage)
+//    {
+//        self.inactiveBarImage = inactiveBarImage
+//        
+//        let newView = UIImageView(image: self.inactiveBarImage)
+//        self.inactiveBarView.removeFromSuperview()
+//        self.inactiveBarView = UIImageView(image: self.inactiveBarImage)
+//        self.inactiveBarView.userInteractionEnabled = false
+//        self.addSubview(self.inactiveBarView)
+//        self.orderSubviews()
+//        self.setNeedsLayout()
+//    }
     
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    func setActiveBarImage(activeBarImage:UIImage)
-    {
-        self.activeBarImage = activeBarImage
-        self.activeBarView.removeFromSuperview()
-        self.activeBarView = UIImageView(image: self.activeBarImage)
-        self.activeBarView.userInteractionEnabled = false
-        self.addSubview(self.activeBarView)
-        self.orderSubviews()
-        self.setNeedsLayout()
-    }
+//    func setActiveBarImage(activeBarImage:UIImage)
+//    {
+//        self.activeBarImage = activeBarImage
+//        self.activeBarView.removeFromSuperview()
+//        self.activeBarView = UIImageView(image: self.activeBarImage)
+//        self.activeBarView.userInteractionEnabled = false
+//        self.addSubview(self.activeBarView)
+//        self.orderSubviews()
+//        self.setNeedsLayout()
+//    }
     
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    func setLeftThumbImage(leftThumbImage:UIImage)
-    {
-        self.leftThumbImage = leftThumbImage
-        self.leftThumbView.removeFromSuperview()
-        self.leftThumbView = UIImageView(image: self.leftThumbImage)
-        self.leftThumbView.userInteractionEnabled = false
-        self.addSubview(self.leftThumbView)
-        self.orderSubviews()
-        self.setNeedsLayout()
-    }
+//    func setLeftThumbImage(leftThumbImage:UIImage)
+//    {
+//        self.leftThumbImage = leftThumbImage
+//        self.leftThumbView.removeFromSuperview()
+//        self.leftThumbView = UIImageView(image: self.leftThumbImage)
+//        self.leftThumbView.userInteractionEnabled = false
+//        self.addSubview(self.leftThumbView)
+//        self.orderSubviews()
+//        self.setNeedsLayout()
+//    }
 
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    func setRightThumbImage(rightThumbImage:UIImage)
-    {
-        self.rightThumbImage = rightThumbImage
-        self.rightThumbView.removeFromSuperview()
-        self.rightThumbView = UIImageView(image: self.rightThumbImage)
-        self.rightThumbView.userInteractionEnabled = false
-        self.addSubview(self.rightThumbView)
-        self.orderSubviews()
-        self.setNeedsLayout()
-    }
+//    func setRightThumbImage(rightThumbImage:UIImage)
+//    {
+//        self.rightThumbImage = rightThumbImage
+//        self.rightThumbView.removeFromSuperview()
+//        self.rightThumbView = UIImageView(image: self.rightThumbImage)
+//        self.rightThumbView.userInteractionEnabled = false
+//        self.addSubview(self.rightThumbView)
+//        self.orderSubviews()
+//        self.setNeedsLayout()
+//    }
     
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    func setMiddleThumbImage(middleThumbImage:UIImage)
-    {
-        self.middleThumbImage = middleThumbImage
-        self.middleThumbView.removeFromSuperview()
-        self.middleThumbView = UIImageView(image: self.middleThumbImage)
-        self.middleThumbView.userInteractionEnabled = false
-        self.addSubview(self.middleThumbView)
-        self.orderSubviews()
-        self.setNeedsLayout()
-    }
+//    func setMiddleThumbImage(middleThumbImage:UIImage)
+//    {
+//        self.middleThumbImage = middleThumbImage
+//        self.middleThumbView.removeFromSuperview()
+//        self.middleThumbView = UIImageView(image: self.middleThumbImage)
+//        self.middleThumbView.userInteractionEnabled = false
+//        self.addSubview(self.middleThumbView)
+//        self.orderSubviews()
+//        self.setNeedsLayout()
+//    }
     
     /////////////////////////////////////////////////////
     //
@@ -346,7 +399,7 @@ import Darwin
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool
+    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool
     {
         previousLocation = touch.locationInView(self)
         
@@ -370,7 +423,7 @@ import Darwin
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool
+    override func continueTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool
     {
         let location = touch.locationInView(self)
         
@@ -486,7 +539,7 @@ import Darwin
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
-    override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent)
+    override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?)
     {
         trackedElement = .None
     }
