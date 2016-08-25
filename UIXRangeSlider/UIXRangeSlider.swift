@@ -2,98 +2,44 @@
 //  UIXRangeSlider.swift
 //  UIXRangeSlider
 //
-//  Created by Guy Umbright on 2/12/15.
-//  Copyright (c) 2015 Umbright Consulting, Inc. All rights reserved.
+//  Created by Guy Umbright on 8/18/16.
+//  Copyright © 2016 Umbright Consulting, Inc. All rights reserved.
 //
 
 import UIKit
-import QuartzCore
-import Darwin
 
 @IBDesignable class UIXRangeSlider: UIControl
 {
-    //Config
-    var thumbActiveBarInset = 0.0
-    
-    var leftThumbImage:UIImage = UIImage()
-    {
+    override var enabled : Bool
+        {
         didSet {
-            self.leftThumbView.removeFromSuperview()
-            self.leftThumbView = UIImageView(image: self.leftThumbImage)
-            self.leftThumbView.userInteractionEnabled = false
-            self.addSubview(self.leftThumbView)
-            self.orderSubviews()
-            self.setNeedsLayout()
+            updateAllElements()
         }
     }
     
-    var rightThumbImage:UIImage = UIImage()
-    {
+    var barHeight : CGFloat = 2.0
+        {
         didSet {
-            self.rightThumbView.removeFromSuperview()
-            self.rightThumbView = UIImageView(image: self.rightThumbImage)
-            self.rightThumbView.userInteractionEnabled = false
-            self.addSubview(self.rightThumbView)
-            self.orderSubviews()
-            self.setNeedsLayout()
+            self.updateImageForElement(.InactiveBar)
+            self.updateImageForElement(.ActiveBar)
         }
     }
     
-    var middleThumbImage:UIImage = UIImage()
-    {
-        didSet {
-            self.middleThumbView.removeFromSuperview()
-            self.middleThumbView = UIImageView(image: self.middleThumbImage)
-            self.middleThumbView.userInteractionEnabled = false
-            self.addSubview(self.middleThumbView)
-            self.orderSubviews()
-            self.setNeedsLayout()
-        }
-    }
+    /////////////////////////////////////////////////////
+    // Component views
+    /////////////////////////////////////////////////////
+    var inactiveBarView:UIImageView = UIImageView()
+    var activeBarView:UIImageView = UIImageView()
+    var leftThumbView:UIImageView = UIImageView()
+    var rightThumbView:UIImageView = UIImageView()
+    var middleThumbView:UIImageView = UIImageView()
+
     
-    var inactiveBarImage:UIImage?
-    {
-        didSet {
-            let newView = UIImageView(image: self.inactiveBarImage)
-            self.inactiveBarView.removeFromSuperview()
-            self.inactiveBarView = UIImageView(image: self.inactiveBarImage)
-            self.inactiveBarView.userInteractionEnabled = false
-            self.addSubview(self.inactiveBarView)
-            self.orderSubviews()
-            self.setNeedsLayout()
-        }
-    }
-    
-    var activeBarImage:UIImage = UIImage()
-    {
-        didSet {
-            self.activeBarView.removeFromSuperview()
-            self.activeBarView = UIImageView(image: self.activeBarImage)
-            self.activeBarView.userInteractionEnabled = false
-            self.addSubview(self.activeBarView)
-            self.orderSubviews()
-            self.setNeedsLayout()
-        }
-    }
-    
-    var previousLocation : CGPoint!
-    
-    enum ElementTracked
-    {
-        case None
-        case LeftThumb
-        case MiddleThumb
-        case RightThumb
-    }
-    var trackedElement = ElementTracked.None
-    
-    var movingLeftThumb : Bool = false
-    var movingMiddleThumb : Bool = false
-    var movingRightThumb : Bool = false
-    
-    //State
+    /////////////////////////////////////////////////////
+    // Values
+    /////////////////////////////////////////////////////
     @IBInspectable var minimumValue:Float = 0.0
-    {
+        {
         didSet {
             if (minimumValue > maximumValue)
             {
@@ -104,7 +50,7 @@ import Darwin
     }
     
     @IBInspectable var maximumValue:Float = 1.0
-    {
+        {
         didSet {
             if (maximumValue < minimumValue)
             {
@@ -127,7 +73,7 @@ import Darwin
     }
     
     @IBInspectable var rightValue:Float = 0.7
-    {
+        {
         didSet {
             if (rightValue >= self.maximumValue)
             {
@@ -137,89 +83,26 @@ import Darwin
             self.setNeedsLayout()
         }
     }
-    
-    //component views
-    var inactiveBarView:UIView = UIView()
-    var activeBarView:UIView = UIView()
-    var leftThumbView:UIView = UIView()
-    var rightThumbView:UIView = UIView()
-    var middleThumbView:UIView = UIView()
-    
-    //min ht = 31
-    //respect view width, height is centered on view y
-    
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
 
     /////////////////////////////////////////////////////
-    //
+    // Tracking
     /////////////////////////////////////////////////////
-    func commonInit()
+    enum ElementTracked
     {
-        self.allocateDefaultViews()
+        case None
+        case LeftThumb
+        case MiddleThumb
+        case RightThumb
     }
     
-    /////////////////////////////////////////////////////
-    //
-    /////////////////////////////////////////////////////
-    func allocateDefaultViews()
-    {
-        self.inactiveBarView = UIView(frame: CGRectMake(0, 0, 2, 2))
-        self.inactiveBarView.backgroundColor = UIColor.lightGrayColor()
-        self.inactiveBarView.userInteractionEnabled = false
-        
-        self.activeBarView = UIView(frame: CGRectMake(0, 0, 2, 2))
-        self.activeBarView.backgroundColor = UIColor.blueColor()
-        self.activeBarView.userInteractionEnabled = false
-        
-        self.middleThumbView = UIView(frame: CGRectMake(0, 0, 1, 27))
-        self.middleThumbView.backgroundColor = UIColor.lightGrayColor()
-        self.middleThumbView.layer.opacity = 0.5
-        self.middleThumbView.layer.shadowOpacity = 0.25
-        self.middleThumbView.layer.shadowOffset = CGSizeMake(0.0, 4.0)
-        self.middleThumbView.layer.shadowColor = UIColor.grayColor().CGColor
-        self.middleThumbView.layer.shadowRadius = 2.0
-        self.middleThumbView.userInteractionEnabled = false
-        
-        self.leftThumbView = UIView(frame: CGRectMake(0, 0, 27, 27))
-        var path = UIBezierPath(arcCenter: CGPointMake(27.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: true)
-        path.closePath()
-        var layer = CAShapeLayer()
-        layer.path = path.CGPath
-        layer.fillColor = UIColor.whiteColor().CGColor
-        layer.strokeColor = UIColor.lightGrayColor().CGColor
-        layer.lineWidth = 0.25
-        layer.shadowOpacity = 0.25
-        layer.shadowOffset = CGSizeMake(-3.0, 4.0)
-        layer.shadowColor = UIColor.grayColor().CGColor
-        layer.shadowRadius = 2.0
-        self.leftThumbView.layer.addSublayer(layer)
-        self.leftThumbView.userInteractionEnabled = false
-        
-        self.rightThumbView = UIView(frame: CGRectMake(0, 0, 27, 27))
-        path = UIBezierPath(arcCenter: CGPointMake(0.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: false)
-        path.closePath()
-        layer = CAShapeLayer()
-        layer.path = path.CGPath
-        layer.fillColor = UIColor.whiteColor().CGColor
-        layer.strokeColor = UIColor.lightGrayColor().CGColor
-        layer.lineWidth = 0.25
-        layer.shadowOpacity = 0.25
-        layer.shadowOffset = CGSizeMake(3.0, 4.0)
-        layer.shadowColor = UIColor.grayColor().CGColor
-        self.rightThumbView.layer.addSublayer(layer)
-        self.rightThumbView.userInteractionEnabled = false
-        
-        self.orderSubviews()
-        
-        self.setNeedsLayout()
-    }
+    var trackedElement = ElementTracked.None
     
+    var movingLeftThumb : Bool = false
+    var movingMiddleThumb : Bool = false
+    var movingRightThumb : Bool = false
+    
+    var previousLocation : CGPoint!
+
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
@@ -228,7 +111,7 @@ import Darwin
         super.init(frame: frame)
         self.commonInit()
     }
-
+    
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
@@ -245,7 +128,296 @@ import Darwin
     {
         self.commonInit()
     }
+
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func commonInit()
+    {
+        setTint(UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0), forElement: .ActiveBar, forControlState: .Normal)
+        self.configureDefaultLeftThumbView(self.leftThumbView)
+        self.configureDefaultRightThumbView(self.rightThumbView)
+        self.configureDefaultActiveBarView(self.activeBarView)
+        self.configureDefaultInactiveBarView(self.inactiveBarView)
+        self.configureDefaultMiddleThumbView(self.middleThumbView)
+        self.allocateDefaultViews()
+    }
+
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func allocateDefaultViews()
+    {
+        self.orderSubviews()
+        
+        self.setNeedsLayout()
+    }
     
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func orderSubviews()
+    {
+        for view in self.subviews as [UIView]
+        {
+            view.removeFromSuperview()
+        }
+        
+        self.addSubview(self.inactiveBarView)
+        self.addSubview(self.leftThumbView)
+        self.addSubview(self.middleThumbView)
+        self.addSubview(self.rightThumbView)
+        self.addSubview(self.activeBarView)
+    }
+
+    enum UIXRangeSliderElement : UInt {
+        case LeftThumb = 0
+        case RightThumb
+        case MiddleThumb
+        case ActiveBar
+        case InactiveBar
+    }
+    
+    typealias stateImageDictionary = [UInt : UIImage]
+    var elementImages : [UInt : stateImageDictionary] = [:]
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func stateImageDictionaryForElement(element : UIXRangeSliderElement) -> stateImageDictionary?
+    {
+        return elementImages[element.rawValue]
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func setImage(image : UIImage?, forElement element : UIXRangeSliderElement, forControlState state :UIControlState)
+    {
+        var dict = self.stateImageDictionaryForElement(element)
+        if (dict == nil)
+        {
+            dict = stateImageDictionary()
+            elementImages[element.rawValue] = dict
+        }
+        elementImages[element.rawValue]![state.rawValue] = image
+        //dict![state.rawValue] = image
+        self.updateImageForElement(element)
+    }
+
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func image(forElement element: UIXRangeSliderElement, forState state :UIControlState) -> UIImage?
+    {
+        var result : UIImage? = nil
+        if let imageDict = self.stateImageDictionaryForElement(element)
+        {
+            result = imageDict[state.rawValue]
+        }
+        return result
+    }
+
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func imageForCurrentState(element : UIXRangeSliderElement) -> UIImage?
+    {
+        let image : UIImage? = self.image(forElement: element, forState: self.state) ?? self.image(forElement: element, forState: .Normal)
+        return image
+    }
+
+    typealias stateTintDictionary = [UInt : UIColor]
+    var elementTints : [UInt : stateTintDictionary] = [:]
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func stateTintDictionaryForElement(element : UIXRangeSliderElement) -> stateTintDictionary?
+    {
+        return elementTints[element.rawValue]
+    }
+
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func setTint(tint : UIColor, forElement element : UIXRangeSliderElement, forControlState state :UIControlState)
+    {
+        var dict = self.stateTintDictionaryForElement(element)
+        if (dict == nil)
+        {
+            dict = stateTintDictionary()
+            elementTints[element.rawValue] = dict
+        }
+        elementTints[element.rawValue]![state.rawValue] = tint
+        self.updateImageForElement(element)
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func tint(forElement element: UIXRangeSliderElement, forState state :UIControlState) -> UIColor?
+    {
+        var result : UIColor? = nil
+        if let tintDict = self.stateTintDictionaryForElement(element)
+        {
+            result = tintDict[state.rawValue]
+        }
+        return result
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func tintForCurrentState(element : UIXRangeSliderElement) -> UIColor
+    {
+        let color = self.tint(forElement: element, forState: self.state) ?? self.tint(forElement: element, forState: .Normal)
+        return color ?? UIColor.grayColor()
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func updateAllElements()
+    {
+        updateImageForElement(.LeftThumb)
+        updateImageForElement(.RightThumb)
+        updateImageForElement(.MiddleThumb)
+        updateImageForElement(.ActiveBar)
+        updateImageForElement(.InactiveBar)
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func updateImageForElement(element : UIXRangeSliderElement)
+    {
+        let state = self.enabled ? UIControlState.Normal : UIControlState.Disabled
+        
+        switch element
+        {
+        case .LeftThumb:
+            self.leftThumbView.image = imageForCurrentState(element)
+            if self.leftThumbView.image == nil
+            {
+                self.configureDefaultLeftThumbView(self.leftThumbView)
+            }
+            else
+            {
+                if let sublayers = self.leftThumbView.layer.sublayers
+                {
+                    for layer in sublayers
+                    {
+                        layer.removeFromSuperlayer()
+                    }
+                }
+            }
+            self.leftThumbView.tintColor = tint(forElement: element, forState: state)
+            self.setNeedsLayout()
+            
+        case .RightThumb:
+            self.rightThumbView.image = imageForCurrentState(element)
+            if self.rightThumbView.image == nil
+            {
+                self.configureDefaultRightThumbView(self.rightThumbView)
+            }
+            else
+            {
+                if let sublayers = self.rightThumbView.layer.sublayers
+                {
+                    for layer in sublayers
+                    {
+                        layer.removeFromSuperlayer()
+                    }
+                }
+            }
+            self.rightThumbView.tintColor = tint(forElement: element, forState: state)
+            self.setNeedsLayout()
+            
+        case .MiddleThumb:
+            self.middleThumbView.image = imageForCurrentState(element)
+            if self.middleThumbView.image == nil
+            {
+                self.configureDefaultMiddleThumbView(self.middleThumbView)
+            }
+            else
+            {
+                self.middleThumbView.backgroundColor = UIColor.clearColor()
+                self.middleThumbView.frame = CGRectMake(0,0, self.middleThumbView.image!.size.width, self.middleThumbView.image!.size.height)
+            }
+            self.middleThumbView.tintColor = tint(forElement: element, forState: state)
+            self.setNeedsLayout()
+            
+        case .ActiveBar:
+            self.activeBarView.image = imageForCurrentState(element)
+            if self.activeBarView.image == nil
+            {
+                self.configureDefaultActiveBarView(self.activeBarView)
+            }
+            else
+            {
+                self.activeBarView.backgroundColor = UIColor.clearColor()
+                self.activeBarView.frame = CGRectMake(0,0, self.activeBarView.image!.size.width, self.activeBarView.image!.size.height)
+            }
+            self.activeBarView.tintColor = tint(forElement: element, forState: state)
+            self.setNeedsLayout()
+            
+        case .InactiveBar:
+            self.inactiveBarView.image = imageForCurrentState(element)
+            if self.inactiveBarView.image == nil
+            {
+                self.configureDefaultInactiveBarView(self.inactiveBarView)
+            }
+            else
+            {
+                self.inactiveBarView.backgroundColor = UIColor.clearColor()
+                self.inactiveBarView.frame = CGRectMake(0,0, self.inactiveBarView.image!.size.width, self.inactiveBarView.image!.size.height)
+            }
+            self.inactiveBarView.tintColor = tint(forElement: element, forState: state)
+            self.setNeedsLayout()
+        }
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func currentLeftThumbImage() -> UIImage?
+    {
+        return leftThumbView.image!;
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func currentRightThumbImage() -> UIImage?
+    {
+        return rightThumbView.image!;
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func currentMiddleThumbImage() -> UIImage?
+    {
+        return middleThumbView.image!;
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func currentActiveBarImage() -> UIImage?
+    {
+        return activeBarView.image!;
+    }
+    
+    /////////////////////////////////////////////////////
+    //
+    /////////////////////////////////////////////////////
+    func currentInactiveBarImage() -> UIImage?
+    {
+        return inactiveBarView.image!;
+    }
+
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
@@ -275,7 +447,7 @@ import Darwin
         frame.size.width = CGRectGetMinX(self.rightThumbView.frame) - frame.origin.x
         self.activeBarView.frame = frame
     }
-    
+
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
@@ -306,96 +478,11 @@ import Darwin
         let pos = Float(self.inactiveBarView.frame.width) * (value - self.minimumValue) / (self.maximumValue - self.minimumValue) +  Float(self.inactiveBarView.frame.origin.x)
         return CGFloat(pos)
     }
-    
-    /////////////////////////////////////////////////////
-    //
-    /////////////////////////////////////////////////////
-//    func setInactiveBarImage(inactiveBarImage:UIImage)
-//    {
-//        self.inactiveBarImage = inactiveBarImage
-//        
-//        let newView = UIImageView(image: self.inactiveBarImage)
-//        self.inactiveBarView.removeFromSuperview()
-//        self.inactiveBarView = UIImageView(image: self.inactiveBarImage)
-//        self.inactiveBarView.userInteractionEnabled = false
-//        self.addSubview(self.inactiveBarView)
-//        self.orderSubviews()
-//        self.setNeedsLayout()
-//    }
-    
-    /////////////////////////////////////////////////////
-    //
-    /////////////////////////////////////////////////////
-//    func setActiveBarImage(activeBarImage:UIImage)
-//    {
-//        self.activeBarImage = activeBarImage
-//        self.activeBarView.removeFromSuperview()
-//        self.activeBarView = UIImageView(image: self.activeBarImage)
-//        self.activeBarView.userInteractionEnabled = false
-//        self.addSubview(self.activeBarView)
-//        self.orderSubviews()
-//        self.setNeedsLayout()
-//    }
-    
-    /////////////////////////////////////////////////////
-    //
-    /////////////////////////////////////////////////////
-//    func setLeftThumbImage(leftThumbImage:UIImage)
-//    {
-//        self.leftThumbImage = leftThumbImage
-//        self.leftThumbView.removeFromSuperview()
-//        self.leftThumbView = UIImageView(image: self.leftThumbImage)
-//        self.leftThumbView.userInteractionEnabled = false
-//        self.addSubview(self.leftThumbView)
-//        self.orderSubviews()
-//        self.setNeedsLayout()
-//    }
+}
 
-    /////////////////////////////////////////////////////
-    //
-    /////////////////////////////////////////////////////
-//    func setRightThumbImage(rightThumbImage:UIImage)
-//    {
-//        self.rightThumbImage = rightThumbImage
-//        self.rightThumbView.removeFromSuperview()
-//        self.rightThumbView = UIImageView(image: self.rightThumbImage)
-//        self.rightThumbView.userInteractionEnabled = false
-//        self.addSubview(self.rightThumbView)
-//        self.orderSubviews()
-//        self.setNeedsLayout()
-//    }
-    
-    /////////////////////////////////////////////////////
-    //
-    /////////////////////////////////////////////////////
-//    func setMiddleThumbImage(middleThumbImage:UIImage)
-//    {
-//        self.middleThumbImage = middleThumbImage
-//        self.middleThumbView.removeFromSuperview()
-//        self.middleThumbView = UIImageView(image: self.middleThumbImage)
-//        self.middleThumbView.userInteractionEnabled = false
-//        self.addSubview(self.middleThumbView)
-//        self.orderSubviews()
-//        self.setNeedsLayout()
-//    }
-    
-    /////////////////////////////////////////////////////
-    //
-    /////////////////////////////////////////////////////
-    func orderSubviews()
-    {
-        for view in self.subviews as [UIView]
-        {
-            view.removeFromSuperview()
-        }
-        
-        self.addSubview(self.inactiveBarView)
-        self.addSubview(self.leftThumbView)
-        self.addSubview(self.middleThumbView)
-        self.addSubview(self.rightThumbView)
-        self.addSubview(self.activeBarView)
-    }
-    
+// MARK: -- Tracking --
+extension UIXRangeSlider
+{
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
@@ -419,7 +506,7 @@ import Darwin
         
         return trackedElement != .None
     }
-
+    
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
@@ -447,7 +534,7 @@ import Darwin
         
         return true
     }
-
+    
     /////////////////////////////////////////////////////
     //
     /////////////////////////////////////////////////////
@@ -543,5 +630,76 @@ import Darwin
     {
         trackedElement = .None
     }
+    
+}
 
+// MARK: -- DefaultViews --
+extension UIXRangeSlider
+{
+    func configureDefaultLeftThumbView(view : UIImageView)
+    {
+        view.image = nil
+        view.frame = CGRectMake(0, 0, 27, 27)
+        let path = UIBezierPath(arcCenter: CGPointMake(27.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: true)
+        path.closePath()
+        let layer = CAShapeLayer()
+        layer.path = path.CGPath
+        layer.fillColor = UIColor.whiteColor().CGColor
+        layer.strokeColor = UIColor.lightGrayColor().CGColor
+        layer.lineWidth = 0.25
+        layer.shadowOpacity = 0.25
+        layer.shadowOffset = CGSizeMake(-3.0, 4.0)
+        layer.shadowColor = UIColor.grayColor().CGColor
+        layer.shadowRadius = 2.0
+        view.layer.addSublayer(layer)
+        view.userInteractionEnabled = false
+        view.tintColor = UIColor.grayColor()
+    }
+    
+    func configureDefaultRightThumbView(view : UIImageView)
+    {
+        view.image = nil
+        view.frame = CGRectMake(0, 0, 27, 27)
+        let path = UIBezierPath(arcCenter: CGPointMake(0.0, 13.5), radius: CGFloat(13.5), startAngle: CGFloat(M_PI/2.0), endAngle: CGFloat(M_PI*1.5), clockwise: false)
+        path.closePath()
+        let layer = CAShapeLayer()
+        layer.path = path.CGPath
+        layer.fillColor = UIColor.whiteColor().CGColor
+        layer.strokeColor = UIColor.lightGrayColor().CGColor
+        layer.lineWidth = 0.25
+        layer.shadowOpacity = 0.25
+        layer.shadowOffset = CGSizeMake(3.0, 4.0)
+        layer.shadowColor = UIColor.grayColor().CGColor
+        view.layer.addSublayer(layer)
+        view.userInteractionEnabled = false
+    }
+    
+    func configureDefaultMiddleThumbView(view : UIImageView)
+    {
+        view.image = nil
+        view.frame = CGRectMake(0, 0, 1, 27)
+        view.backgroundColor = self.tintForCurrentState(.MiddleThumb)
+        view.layer.opacity = 0.5
+        view.layer.shadowOpacity = 0.25
+        view.layer.shadowOffset = CGSizeMake(0.0, 4.0)
+        view.layer.shadowColor = UIColor.grayColor().CGColor
+        view.layer.shadowRadius = 2.0
+        view.userInteractionEnabled = false
+    }
+    
+    func configureDefaultActiveBarView(view : UIImageView)
+    {
+        view.image = nil
+        view.frame = CGRectMake(0, 0, 2, self.barHeight)
+        view.backgroundColor = self.tintForCurrentState(.ActiveBar)
+        view.userInteractionEnabled = false
+    }
+    
+    func configureDefaultInactiveBarView(view : UIImageView)
+    {
+        view.image = nil
+        view.frame = CGRectMake(0, 0, 2, self.barHeight)
+        view.backgroundColor = self.tintForCurrentState(.InactiveBar)
+        view.userInteractionEnabled = false
+    }
 }

@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		E49DDFD01A8D3DDB00FE3146 /* UIXRangeSliderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49DDFCF1A8D3DDB00FE3146 /* UIXRangeSliderTests.swift */; };
-		E49DDFE81A8D3EC300FE3146 /* UIXRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49DDFDD1A8D3EC300FE3146 /* UIXRangeSlider.swift */; };
 		E49DDFE91A8D3EC300FE3146 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49DDFDF1A8D3EC300FE3146 /* AppDelegate.swift */; };
 		E49DDFEA1A8D3EC300FE3146 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E49DDFE01A8D3EC300FE3146 /* LaunchScreen.xib */; };
 		E49DDFEB1A8D3EC300FE3146 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E49DDFE21A8D3EC300FE3146 /* Main.storyboard */; };
 		E49DDFEC1A8D3EC300FE3146 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E49DDFE41A8D3EC300FE3146 /* Images.xcassets */; };
 		E49DDFED1A8D3EC300FE3146 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E49DDFE51A8D3EC300FE3146 /* Info.plist */; };
 		E49DDFEE1A8D3EC300FE3146 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49DDFE71A8D3EC300FE3146 /* ViewController.swift */; };
+		E4CEE13F1D66AFEB00749752 /* UIXRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CEE13E1D66AFEB00749752 /* UIXRangeSlider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,7 +32,7 @@
 		E49DDFC91A8D3DDB00FE3146 /* UIXRangeSliderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UIXRangeSliderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E49DDFCE1A8D3DDB00FE3146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E49DDFCF1A8D3DDB00FE3146 /* UIXRangeSliderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIXRangeSliderTests.swift; sourceTree = "<group>"; };
-		E49DDFDD1A8D3EC300FE3146 /* UIXRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIXRangeSlider.swift; sourceTree = "<group>"; };
+		E49DDFDD1A8D3EC300FE3146 /* UIXRangeSliderOld.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIXRangeSliderOld.swift; sourceTree = "<group>"; };
 		E49DDFDF1A8D3EC300FE3146 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E49DDFE11A8D3EC300FE3146 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		E49DDFE31A8D3EC300FE3146 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -40,6 +40,7 @@
 		E49DDFE51A8D3EC300FE3146 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E49DDFE71A8D3EC300FE3146 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E4CEE13D1D66784E00749752 /* UIXRangeSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIXRangeSlider.h; sourceTree = "<group>"; };
+		E4CEE13E1D66AFEB00749752 /* UIXRangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIXRangeSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				E4CEE13D1D66784E00749752 /* UIXRangeSlider.h */,
-				E49DDFDD1A8D3EC300FE3146 /* UIXRangeSlider.swift */,
+				E49DDFDD1A8D3EC300FE3146 /* UIXRangeSliderOld.swift */,
+				E4CEE13E1D66AFEB00749752 /* UIXRangeSlider.swift */,
 			);
 			path = UIXRangeSlider;
 			sourceTree = "<group>";
@@ -224,7 +226,7 @@
 			files = (
 				E49DDFEE1A8D3EC300FE3146 /* ViewController.swift in Sources */,
 				E49DDFE91A8D3EC300FE3146 /* AppDelegate.swift in Sources */,
-				E49DDFE81A8D3EC300FE3146 /* UIXRangeSlider.swift in Sources */,
+				E4CEE13F1D66AFEB00749752 /* UIXRangeSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

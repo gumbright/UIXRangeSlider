@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -17,27 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pwf-0a-lo7" customClass="UIXRangeSlider" customModule="UIXRangeSlider" customModuleProvider="target">
-                                <rect key="frame" x="58" y="339" width="484" height="64"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="sliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="EGx-dU-Hwk"/>
-                                </connections>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r19-oR-v6U">
-                                <rect key="frame" x="58" y="424" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpD-nu-cw5">
-                                <rect key="frame" x="500" y="424" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2ff-Ga-HkW" customClass="UIXRangeSlider" customModule="UIXRangeSlider" customModuleProvider="target">
-                                <rect key="frame" x="16" y="136" width="568" height="55"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ff-Ga-HkW" customClass="UIXRangeSlider" customModule="UIXRangeSlider" customModuleProvider="target">
+                                <rect key="frame" x="20" y="136" width="560" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="D4W-js-UzY"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="minimumValue">
                                         <real key="value" value="0.0"/>
@@ -53,31 +38,73 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xau-93-c8s">
-                                <rect key="frame" x="14" y="58" width="572" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="EBh-dQ-eG3">
+                                <rect key="frame" x="38" y="40" width="524" height="31"/>
                             </slider>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CC3-MP-h0P" customClass="UIXRangeSlider" customModule="UIXRangeSlider" customModuleProvider="target">
+                                <rect key="frame" x="20" y="243" width="560" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Xdd-kt-7ct"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="minimumValue">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maximumValue">
+                                        <real key="value" value="60"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftValue">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="rightValue">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yn-4f-wmq">
+                                <rect key="frame" x="247" y="305" width="106" height="30"/>
+                                <state key="normal" title="Toggle Enabled"/>
+                                <connections>
+                                    <action selector="toggleEnabledPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J6k-XW-HdU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeb-Ya-FO0">
+                                <rect key="frame" x="250" y="205" width="101" height="30"/>
+                                <state key="normal" title="Toggle Display"/>
+                                <connections>
+                                    <action selector="buttonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="e1X-p6-v9Z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xau-93-c8s" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="38" id="6vX-kH-NyK"/>
-                            <constraint firstItem="hpD-nu-cw5" firstAttribute="top" secondItem="Pwf-0a-lo7" secondAttribute="bottom" constant="21" id="9JL-fa-6kq"/>
-                            <constraint firstItem="Pwf-0a-lo7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="FNM-1d-sqv"/>
+                            <constraint firstItem="qeb-Ya-FO0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1VW-Vd-bVf"/>
+                            <constraint firstItem="4yn-4f-wmq" firstAttribute="top" secondItem="CC3-MP-h0P" secondAttribute="bottom" constant="25" id="7TB-i7-qmM"/>
+                            <constraint firstItem="CC3-MP-h0P" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="8wt-wl-6nH"/>
+                            <constraint firstItem="CC3-MP-h0P" firstAttribute="top" secondItem="2ff-Ga-HkW" secondAttribute="bottom" constant="63" id="A9y-qJ-n9I"/>
+                            <constraint firstItem="EBh-dQ-eG3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="FfY-tj-UGs"/>
+                            <constraint firstItem="qeb-Ya-FO0" firstAttribute="top" secondItem="2ff-Ga-HkW" secondAttribute="bottom" constant="25" id="IdK-j6-zbk"/>
+                            <constraint firstItem="4yn-4f-wmq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JMp-4q-deD"/>
+                            <constraint firstItem="EBh-dQ-eG3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="O0E-Wr-mLG"/>
                             <constraint firstItem="2ff-Ga-HkW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="116" id="Uub-nj-94H"/>
-                            <constraint firstItem="r19-oR-v6U" firstAttribute="top" secondItem="Pwf-0a-lo7" secondAttribute="bottom" constant="21" id="aZX-lK-bjH"/>
-                            <constraint firstItem="hpD-nu-cw5" firstAttribute="trailing" secondItem="Pwf-0a-lo7" secondAttribute="trailing" id="ctd-ym-4t4"/>
-                            <constraint firstItem="Pwf-0a-lo7" firstAttribute="leading" secondItem="r19-oR-v6U" secondAttribute="leading" id="dcY-RS-xgE"/>
-                            <constraint firstItem="xau-93-c8s" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="g8d-gp-g6Z"/>
+                            <constraint firstItem="CC3-MP-h0P" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Vao-wS-jpJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EBh-dQ-eG3" secondAttribute="trailing" constant="20" id="ZWM-T5-Eid"/>
+                            <constraint firstItem="CC3-MP-h0P" firstAttribute="top" secondItem="qeb-Ya-FO0" secondAttribute="bottom" constant="25" id="hdG-PO-QD1"/>
                             <constraint firstItem="2ff-Ga-HkW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="jXZ-hv-On4"/>
                             <constraint firstItem="2ff-Ga-HkW" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="jrR-TJ-r3O"/>
-                            <constraint firstItem="Pwf-0a-lo7" firstAttribute="top" secondItem="2ff-Ga-HkW" secondAttribute="bottom" constant="148" id="rVI-QB-r27"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Pwf-0a-lo7" secondAttribute="trailing" constant="20" id="wwh-im-LyF"/>
-                            <constraint firstItem="xau-93-c8s" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="xfa-dJ-fsM"/>
+                            <constraint firstItem="2ff-Ga-HkW" firstAttribute="top" secondItem="EBh-dQ-eG3" secondAttribute="bottom" constant="66" id="k8t-zd-Pkt"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qeb-Ya-FO0" secondAttribute="bottom" constant="20" id="tzY-uF-SEM"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Uub-nj-94H"/>
+                                <exclude reference="A9y-qJ-n9I"/>
+                                <exclude reference="tzY-uF-SEM"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
-                        <outlet property="leftValue" destination="r19-oR-v6U" id="xvT-YA-lcw"/>
-                        <outlet property="mySlider" destination="Pwf-0a-lo7" id="c7U-iX-4ce"/>
-                        <outlet property="rightValue" destination="hpD-nu-cw5" id="RlE-xx-jy2"/>
+                        <outlet property="slider2" destination="CC3-MP-h0P" id="vUp-dG-eWK"/>
                         <outlet property="stockSlider" destination="2ff-Ga-HkW" id="c0W-dd-sAb"/>
                     </connections>
                 </viewController>
