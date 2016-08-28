@@ -38,34 +38,12 @@ import UIKit
     /////////////////////////////////////////////////////
     // Values
     /////////////////////////////////////////////////////
-    @IBInspectable var minimumValue:Float = 0.0
-        {
-        didSet {
-            if (minimumValue > maximumValue)
-            {
-                minimumValue = maximumValue
-            }
-            self.setNeedsLayout()
-        }
-    }
-    
-    @IBInspectable var maximumValue:Float = 1.0
-        {
-        didSet {
-            if (maximumValue < minimumValue)
-            {
-                maximumValue = minimumValue
-            }
-            self.setNeedsLayout()
-        }
-    }
-    
     @IBInspectable var leftValue:Float = 0.3
         {
         didSet {
-            if (leftValue <= self.minimumValue)
+            if (leftValue <= 0.0)
             {
-                leftValue = self.minimumValue
+                leftValue = 0.0
             }
             
             self.setNeedsLayout()
@@ -75,9 +53,9 @@ import UIKit
     @IBInspectable var rightValue:Float = 0.7
         {
         didSet {
-            if (rightValue >= self.maximumValue)
+            if (rightValue >= 1.0)
             {
-                rightValue = self.maximumValue
+                rightValue = 1.0
             }
             
             self.setNeedsLayout()
@@ -201,7 +179,6 @@ import UIKit
             elementImages[element.rawValue] = dict
         }
         elementImages[element.rawValue]![state.rawValue] = image
-        //dict![state.rawValue] = image
         self.updateImageForElement(element)
     }
 
@@ -475,7 +452,7 @@ import UIKit
     /////////////////////////////////////////////////////
     func positionForValue(value:Float) -> CGFloat
     {
-        let pos = Float(self.inactiveBarView.frame.width) * (value - self.minimumValue) / (self.maximumValue - self.minimumValue) +  Float(self.inactiveBarView.frame.origin.x)
+        let pos = (Float(self.inactiveBarView.frame.width) * value)  +  Float(self.inactiveBarView.frame.origin.x)
         return CGFloat(pos)
     }
 }
@@ -514,9 +491,8 @@ extension UIXRangeSlider
     {
         let location = touch.locationInView(self)
         
-        // 1. Determine by how much the user has dragged
         let deltaLocation = Double(location.x - previousLocation.x)
-        let deltaValue = (Double(maximumValue) - Double(minimumValue)) * deltaLocation / Double(bounds.width /*- thumbWidth*/)
+        let deltaValue = deltaLocation / Double(bounds.width)
         
         switch trackedElement
         {
@@ -541,16 +517,15 @@ extension UIXRangeSlider
     func handleLeftThumbMove(location:CGPoint, delta:Double)
     {
         let translation = CGPointMake(location.x - previousLocation.x,location.y - previousLocation.y)
-        let range = self.maximumValue - self.minimumValue
         let availableWidth = self.inactiveBarView.frame.width
         
-        let newValue = self.leftValue + Float(translation.x) / Float(availableWidth) * range
+        let newValue = self.leftValue + Float(translation.x) / Float(availableWidth)
         
         self.leftValue = newValue
         
-        if (self.leftValue < minimumValue)
+        if (self.leftValue < 0)
         {
-            self.leftValue = minimumValue
+            self.leftValue = 0
         }
         
         if (self.leftValue > self.rightValue)
@@ -568,22 +543,21 @@ extension UIXRangeSlider
     func handleMiddleThumbMove(location:CGPoint, delta:Double)
     {
         let translation = CGPointMake(location.x - previousLocation.x,location.y - previousLocation.y)
-        let range = self.maximumValue - self.minimumValue
         let availableWidth = self.inactiveBarView.frame.width
         let diff = self.rightValue - self.leftValue
         
-        let newLeftValue = self.leftValue + Float(translation.x) / Float(availableWidth) * range
-        if (newLeftValue < minimumValue)
+        let newLeftValue = self.leftValue + Float(translation.x) / Float(availableWidth)
+        if (newLeftValue < 0)
         {
-            self.leftValue = self.minimumValue
+            self.leftValue = 0
             self.rightValue = self.leftValue + diff
         }
         else
         {
-            let newRightValue = self.rightValue + Float(translation.x) / Float(availableWidth) * range
-            if (newRightValue > self.maximumValue)
+            let newRightValue = self.rightValue + Float(translation.x) / Float(availableWidth)
+            if (newRightValue > 1)
             {
-                self.rightValue = self.maximumValue
+                self.rightValue = 1
                 self.leftValue = self.rightValue - diff
             }
             else
@@ -603,15 +577,14 @@ extension UIXRangeSlider
     func handleRightThumbMove(location:CGPoint, delta:Double)
     {
         let translation = CGPointMake(location.x - previousLocation.x,location.y - previousLocation.y)
-        let range = self.maximumValue - self.minimumValue
         let availableWidth = self.inactiveBarView.frame.width
-        let newValue = self.rightValue + Float(translation.x) / Float(availableWidth) * range
+        let newValue = self.rightValue + Float(translation.x) / Float(availableWidth)
         
         self.rightValue = newValue
         
-        if (self.rightValue > self.maximumValue)
+        if (self.rightValue > 1)
         {
-            self.rightValue = self.maximumValue
+            self.rightValue = 1
         }
         
         if (self.rightValue < self.leftValue)
