@@ -41,13 +41,6 @@
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="EBh-dQ-eG3">
                                 <rect key="frame" x="38" y="40" width="524" height="31"/>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeb-Ya-FO0">
-                                <rect key="frame" x="250" y="205" width="101" height="30"/>
-                                <state key="normal" title="Toggle Display"/>
-                                <connections>
-                                    <action selector="buttonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="e1X-p6-v9Z"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CC3-MP-h0P" customClass="UIXRangeSlider" customModule="UIXRangeSlider" customModuleProvider="target">
                                 <rect key="frame" x="20" y="243" width="560" height="44"/>
                                 <constraints>
@@ -61,15 +54,12 @@
                                         <real key="value" value="60"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="leftValue">
-                                        <real key="value" value="0.29999999999999999"/>
+                                        <real key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="rightValue">
-                                        <real key="value" value="0.69999999999999996"/>
+                                        <real key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="sliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="2RL-m1-umU"/>
-                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yn-4f-wmq">
                                 <rect key="frame" x="247" y="305" width="106" height="30"/>
@@ -78,28 +68,20 @@
                                     <action selector="toggleEnabledPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="J6k-XW-HdU"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="whb-Xe-ias">
-                                <rect key="frame" x="538" y="354" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pz3-C9-gLQ">
-                                <rect key="frame" x="20" y="354" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeb-Ya-FO0">
+                                <rect key="frame" x="250" y="205" width="101" height="30"/>
+                                <state key="normal" title="Toggle Display"/>
+                                <connections>
+                                    <action selector="buttonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="e1X-p6-v9Z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="whb-Xe-ias" firstAttribute="trailing" secondItem="CC3-MP-h0P" secondAttribute="trailing" id="19S-Om-Twx"/>
                             <constraint firstItem="qeb-Ya-FO0" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1VW-Vd-bVf"/>
                             <constraint firstItem="4yn-4f-wmq" firstAttribute="top" secondItem="CC3-MP-h0P" secondAttribute="bottom" constant="25" id="7TB-i7-qmM"/>
                             <constraint firstItem="CC3-MP-h0P" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="8wt-wl-6nH"/>
-                            <constraint firstItem="pz3-C9-gLQ" firstAttribute="leading" secondItem="CC3-MP-h0P" secondAttribute="leading" id="9bY-LT-DJk"/>
                             <constraint firstItem="CC3-MP-h0P" firstAttribute="top" secondItem="2ff-Ga-HkW" secondAttribute="bottom" constant="63" id="A9y-qJ-n9I"/>
-                            <constraint firstItem="pz3-C9-gLQ" firstAttribute="top" secondItem="CC3-MP-h0P" secondAttribute="bottom" constant="50" id="Ecg-r9-awj"/>
                             <constraint firstItem="EBh-dQ-eG3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="FfY-tj-UGs"/>
                             <constraint firstItem="qeb-Ya-FO0" firstAttribute="top" secondItem="2ff-Ga-HkW" secondAttribute="bottom" constant="25" id="IdK-j6-zbk"/>
                             <constraint firstItem="4yn-4f-wmq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="JMp-4q-deD"/>
@@ -111,7 +93,6 @@
                             <constraint firstItem="2ff-Ga-HkW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="jXZ-hv-On4"/>
                             <constraint firstItem="2ff-Ga-HkW" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="jrR-TJ-r3O"/>
                             <constraint firstItem="2ff-Ga-HkW" firstAttribute="top" secondItem="EBh-dQ-eG3" secondAttribute="bottom" constant="66" id="k8t-zd-Pkt"/>
-                            <constraint firstItem="whb-Xe-ias" firstAttribute="centerY" secondItem="pz3-C9-gLQ" secondAttribute="centerY" id="q7b-Uf-RNL"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qeb-Ya-FO0" secondAttribute="bottom" constant="20" id="tzY-uF-SEM"/>
                         </constraints>
                         <variation key="default">
@@ -123,8 +104,6 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="leftValue" destination="pz3-C9-gLQ" id="aTN-4g-WCz"/>
-                        <outlet property="rightValue" destination="whb-Xe-ias" id="24b-3g-KXx"/>
                         <outlet property="slider2" destination="CC3-MP-h0P" id="vUp-dG-eWK"/>
                         <outlet property="stockSlider" destination="2ff-Ga-HkW" id="c0W-dd-sAb"/>
                     </connections>
